@@ -1,4 +1,3 @@
-// Define the selector for the header you want to toggle
 const headerSelectorData = [
   "[data-test-id='software-backlog.page-header']",
   ".css-cayjis",
@@ -12,7 +11,6 @@ const ninjaIcon = `<svg fill="#000000" width="16px" height="16px" viewBox="0 -64
   </g>
 </svg>`;
 
-// Create the toggle button
 function createToggleButton() {
   const button = document.createElement('button');
 
@@ -23,7 +21,7 @@ function createToggleButton() {
   button.style.top = '70px';
   button.style.right = '40px';
   button.style.padding = '8px';
-  button.style.zIndex = '1000';
+  button.style.zIndex = '499'; // 500 is jira ticket overlay
   button.style.borderRadius = '3px';
   button.style.display = 'flex';
   button.style.alignItems = 'center';
@@ -38,7 +36,6 @@ function createToggleButton() {
 
   document.body.appendChild(button);
 
-  // Hover effects for more interactivity
   button.addEventListener('mouseenter', () => {
     button.style.backgroundColor = '#e63946';
   });
@@ -46,7 +43,6 @@ function createToggleButton() {
     button.style.backgroundColor = 'rgba(9, 30, 66, 0.04)';
   });
 
-  // Add event listener to toggle the header
   button.addEventListener('click', () => {
     chrome.storage.sync.get(['headerHidden'], (result) => {
       const hide = !result.headerHidden;
@@ -57,36 +53,30 @@ function createToggleButton() {
   });
 }
 
-// Function to toggle the header visibility
 function toggleHeader(hide) {
   headerSelectorData.forEach((selector) => {
     const header = document.querySelector(selector);
     console.log('headerSelector', header);
     if (header) {
       if (hide) {
-        // Create a 20px spacer element and insert it before the header
         const spacer = document.createElement('div');
         spacer.style.height = '20px';
         spacer.style.width = '100%';
         spacer.id = 'headerSpacer';
 
-        // Insert spacer before the header
         header.parentNode.insertBefore(spacer, header);
-        // Hide the header content
         header.style.display = 'none';
       } else {
-        // Remove the spacer and restore the header
         const spacer = document.getElementById('headerSpacer');
         if (spacer) {
           spacer.remove();
         }
-        header.style.display = '';  // Show the header again
+        header.style.display = '';
       }
     }
   });
 }
 
-// Initial Setup: Check storage for the current state and set up the button
 chrome.storage.sync.get(['headerHidden'], (result) => {
   createToggleButton();
   toggleHeader(result.headerHidden);
