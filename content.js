@@ -44,6 +44,7 @@ function createToggleButton() {
   });
 
   button.addEventListener('click', () => {
+    button.blur();
     chrome.storage.sync.get(['headerHidden'], (result) => {
       const hide = !result.headerHidden;
       chrome.storage.sync.set({ headerHidden: hide });
