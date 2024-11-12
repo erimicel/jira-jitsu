@@ -1,5 +1,6 @@
 const headerSelectorData = [
   "[data-test-id='software-backlog.page-header']",
+  "[data-fullscreen-id='roadmap-header-container']",
   ".css-cayjis",
 ];
 
@@ -38,6 +39,7 @@ function createToggleButton() {
 
   button.addEventListener('mouseenter', () => {
     button.style.backgroundColor = '#e63946';
+    button.style.color = '#000000';
   });
   button.addEventListener('mouseleave', () => {
     button.style.backgroundColor = 'rgba(9, 30, 66, 0.04)';

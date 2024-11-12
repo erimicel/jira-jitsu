@@ -16,7 +16,7 @@
   "content_scripts": [
     {
       "matches": [
-        "https://olio.atlassian.net/jira/software/c/projects/*/boards*"
+        "https://*.atlassian.net/jira/*"
       ],
       "js": [
         "content.js"
