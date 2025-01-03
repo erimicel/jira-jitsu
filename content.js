@@ -2,6 +2,11 @@ const headerSelectorData = [
   "[data-test-id='software-backlog.page-header']",
   "[data-fullscreen-id='roadmap-header-container']",
   ".css-cayjis",
+  "._1yt4zdiv",
+];
+
+const headerElementDataWithParent = [
+  ['div[data-fullscreen-id="fullscreen-board-breadcrumbs"]', 2],
 ];
 
 const ninjaIcon = `<svg fill="#000000" width="16px" height="16px" viewBox="0 -64 640 640" style="margin-right: 2px"
@@ -58,7 +63,12 @@ function createToggleButton() {
 
 function toggleHeader(hide) {
   headerSelectorData.forEach((selector) => {
-    const header = document.querySelector(selector);
+    if (!selector) {
+      return;
+    }
+
+    const header = selectElement(selector);
+
     console.log('headerSelector', header);
     if (header) {
       if (hide) {
@@ -78,6 +88,32 @@ function toggleHeader(hide) {
       }
     }
   });
+}
+
+function selectElement(selector) {
+  if (Array.isArray(selector)) {
+    element = document.querySelector(selector[0]);
+    if (element) {
+      if (selector[1] > 0) {
+        for (let i = 0; i < selector[1]; i++) {
+          element = element.parentNode;
+        }
+      }
+      return element;
+    }
+  }
+
+
+  element = selector;
+  if (!element) {
+    return;
+  }
+
+  if (selector instanceof HTMLElement) {
+    return selector;
+  } else {
+    return document.querySelector(selector);
+  }
 }
 
 chrome.storage.sync.get(['headerHidden'], (result) => {
