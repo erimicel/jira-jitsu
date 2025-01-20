@@ -62,7 +62,7 @@ function createToggleButton() {
 }
 
 function toggleHeader(hide) {
-  headerSelectorData.forEach((selector) => {
+  headerSelectorData.concat(headerElementDataWithParent).forEach((selector) => {
     if (!selector) {
       return;
     }
@@ -102,7 +102,6 @@ function selectElement(selector) {
       return element;
     }
   }
-
 
   element = selector;
   if (!element) {
